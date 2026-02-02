@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            background-color: #1a1a1a;
-            color: #ffffff;
+            background-color: #121212;
+            color: #e0e0e0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,36 +16,47 @@
             margin: 0;
         }
         .card {
-            background-color: #2a2a2a;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            width: 90%;
-            max-width: 450px;
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+            width: 95%;
+            max-width: 480px;
             text-align: center;
-            border: 1px solid #444;
+            border: 1px solid #333;
         }
-        h1 { font-size: 1.2rem; color: #aaa; margin-bottom: 20px; }
+        h1 { font-size: 1.1rem; color: #888; margin-bottom: 20px; letter-spacing: 1px; }
         
         .display-area {
-            background: #111;
-            padding: 20px;
-            border-radius: 10px;
+            background: #0a0a0a;
+            padding: 15px;
+            border-radius: 8px;
             margin-bottom: 20px;
-            min-height: 150px;
+            min-height: 220px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 10px;
-            border: 1px inset #333;
+            border: 1px solid #222;
         }
         .info-row {
-            font-size: 1.1rem;
-            border-bottom: 1px solid #222;
-            padding: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            border-bottom: 1px solid #1a1a1a;
+            padding: 8px 5px;
         }
-        .label { color: #00aaff; font-size: 0.8rem; margin-right: 10px; }
-        .value { font-weight: bold; }
+        .label { color: #00aaff; font-size: 0.85rem; font-weight: bold; }
+        .value { font-weight: bold; color: #fff; }
+        .hidden-text { color: #333; }
+
+        .answer-row {
+            margin-top: 15px;
+            min-height: 40px;
+            font-size: 1.6rem;
+            color: #ffcc00;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+        }
 
         .button-grid {
             display: grid;
@@ -53,55 +64,62 @@
             gap: 10px;
         }
         button {
-            padding: 12px 5px;
+            padding: 10px 5px;
             cursor: pointer;
-            background: #3d3d3d;
-            color: white;
-            border: 1px solid #555;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            transition: 0.2s;
+            background: #2d2d2d;
+            color: #ccc;
+            border: 1px solid #444;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
         }
-        button:hover { background: #505050; }
-        button:active { background: #00aaff; }
+        button:hover { background: #3d3d3d; color: #fff; border-color: #666; }
+        button:active { background: #00aaff; color: #fff; }
         
-        .btn-name { grid-column: span 2; background: #4a3a00; border-color: #8a6d00; color: #ffcc00; font-weight: bold; }
+        .btn-name { 
+            grid-column: span 2; 
+            background: #4a3a00; 
+            border-color: #8a6d00; 
+            color: #ffcc00; 
+            font-weight: bold; 
+            margin-top: 5px;
+        }
         .btn-name:hover { background: #634e00; }
 
         .btn-next {
             grid-column: span 2;
             margin-top: 15px;
             background: #005bb5;
+            color: white;
             border: none;
             font-weight: bold;
+            padding: 12px;
         }
         .btn-next:hover { background: #0078ee; }
-        
-        .hidden { color: #444; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h1>誰でしょう？（ヒントを開いてください）</h1>
+    <h1>OPERATOR GUESSING QUIZ</h1>
     
     <div class="display-area">
-        <div class="info-row"><span class="label">種族:</span><span id="res-race" class="value hidden">？？？</span></div>
-        <div class="info-row"><span class="label">ブロック:</span><span id="res-block" class="value hidden">？？？</span></div>
-        <div class="info-row"><span class="label">限定:</span><span id="res-limited" class="value hidden">？？？</span></div>
-        <div class="info-row"><span class="label">出身:</span><span id="res-origin" class="value hidden">？？？</span></div>
-        <div class="info-row"><span class="label">武器:</span><span id="res-weapon" class="value hidden">？？？</span></div>
-        <div class="info-row" style="border:none; margin-top:10px; font-size:1.4rem;">
-            <span id="res-name" class="value" style="color:#ffcc00; display:none;">---</span>
-        </div>
+        <div class="info-row"><span class="label">種族</span><span id="res-race" class="value hidden-text">？？？</span></div>
+        <div class="info-row"><span class="label">性別</span><span id="res-gender" class="value hidden-text">？？？</span></div>
+        <div class="info-row"><span class="label">ブロック数</span><span id="res-block" class="value hidden-text">？？？</span></div>
+        <div class="info-row"><span class="label">限定</span><span id="res-limited" class="value hidden-text">？？？</span></div>
+        <div class="info-row"><span class="label">出身地</span><span id="res-origin" class="value hidden-text">？？？</span></div>
+        <div class="info-row"><span class="label">武器の種類</span><span id="res-weapon" class="value hidden-text">？？？</span></div>
+        <div class="answer-row" id="res-name"></div>
     </div>
 
     <div class="button-grid">
         <button onclick="reveal('race')">種族を表示</button>
+        <button onclick="reveal('gender')">性別を表示</button>
         <button onclick="reveal('block')">ブロック数を表示</button>
         <button onclick="reveal('limited')">限定か表示</button>
         <button onclick="reveal('origin')">出身地を表示</button>
-        <button onclick="reveal('weapon')">武器の種類を表示</button>
+        <button onclick="reveal('weapon')">武器を表示</button>
         <button class="btn-name" onclick="reveal('name')">答え（キャラ名）を表示</button>
         <button class="btn-next" onclick="initQuiz()">次のキャラを抽選</button>
     </div>
@@ -109,96 +127,96 @@
 
 <script>
 const operators = [
-    { name: "ハルカ", race: "ウルプス", block: "1", limited: "否", origin: "ラテラーノ", weapon: "術式（杖）" },
-    { name: "斬業ホシグマ", race: "鬼族", block: "2", limited: "否", origin: "龍門", weapon: "物理（盾）" },
-    { name: "レイディアン", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（召喚オーブ）" },
-    { name: "司霆レイズ", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "物理（剣）" },
-    { name: "トラゴーディア", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（書物）" },
-    { name: "サンクタ・ミキサー", race: "サルカズ", block: "2", limited: "是", origin: "ラテラーノ", weapon: "物理（ガンランス）" },
-    { name: "レミュアン", race: "ペロ", block: "1", limited: "否", origin: "コロンビア", weapon: "物理（ライフル）" },
-    { name: "新約エクシア", race: "ウルプス", block: "1", limited: "是", origin: "ラテラーノ", weapon: "物理（二丁拳銃）" },
-    { name: "Mon3tr", race: "フィリン", block: "2", limited: "否", origin: "ロドスアイランド", weapon: "術式/治療（鎖）" },
-    { name: "ネクラス", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（人形召喚）" },
-    { name: "エンテレケイア", race: "サルカズ", block: "1", limited: "否", origin: "カズデル", weapon: "物理（鎌）" },
-    { name: "熾炎ブレイズ", race: "フィリン", block: "1", limited: "否", origin: "シエスタ", weapon: "術式（爆発）" },
-    { name: "ユー", race: "ドラコ", block: "3", limited: "是", origin: "燕国", weapon: "術式/防御（盾）" },
-    { name: "引星ソーンズ", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（錬金術）" },
-    { name: "クラウンスレイヤー", race: "サルカズ", block: "1", limited: "否", origin: "カズデル", weapon: "物理（短剣）" },
-    { name: "荒蕪ラップランド", race: "ルポ", block: "1", limited: "否", origin: "シラクーザ", weapon: "術式（剣ドローン）" },
-    { name: "ウルピスフォリア", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "物理（鎖）" },
-    { name: "ヴィーナヴィクトリア", race: "カプリニ", block: "2", limited: "否", origin: "コロンビア", weapon: "物理（剣）" },
-    { name: "マルシル", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（拡散）" },
-    { name: "ニンフ", race: "カウトス", block: "1", limited: "是", origin: "ラテラーノ", weapon: "術式（核）" },
-    { name: "ペペ", race: "カプリニ", block: "1", limited: "否", origin: "サーゴン", weapon: "物理（ハンマー）" },
-    { name: "ナラントゥヤ", race: "ペロ", block: "1", limited: "否", origin: "カーラン", weapon: "物理（リボルバー）" },
-    { name: "ウルピアヌス", race: "アイギス", block: "2", limited: "是", origin: "アイギス", weapon: "物理（大剣）" },
-    { name: "シヴィライトエテルナ", race: "ウルプス", block: "1", limited: "否", origin: "ラテラーノ", weapon: "術式（銃）" },
-    { name: "ロゴス", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（杖）" },
-    { name: "ウィシャデル", race: "フィリン", block: "1", limited: "否", origin: "ライタニエ", weapon: "物理（手榴弾）" },
-    { name: "アスカロン", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "物理（フック）" },
-    { name: "Ela", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（罠）" },
-    { name: "ズオラウ", race: "ウルプス", block: "2", limited: "否", origin: "燕国", weapon: "物理（刀）" },
-    { name: "シュウ", race: "フィリン", block: "2", limited: "是", origin: "ラテラーノ", weapon: "物理/治療（銃）" },
-    { name: "レイ", race: "フィリン", block: "1", limited: "否", origin: "燕国", weapon: "物理（弓）" },
-    { name: "デーゲンブレヒャー", race: "アスラン", block: "1", limited: "否", origin: "ライタニエ", weapon: "物理（大太刀）" },
-    { name: "レッシング", race: "フィリン", block: "1", limited: "否", origin: "ライタニエ", weapon: "物理（剣）" },
-    { name: "ヴィヴィアナ", race: "カプリニ", block: "2", limited: "否", origin: "コロンビア", weapon: "物理（剣）" },
-    { name: "ヴィルトゥオーサ", race: "ペロ", block: "1", limited: "は", origin: "コロンビア", weapon: "術式（儀式）" },
-    { name: "ヘドリー", race: "サルカズ", block: "1", limited: "否", origin: "カズデル", weapon: "物理（刃）" },
-    { name: "滌火ジェシカ", race: "ウルプス", block: "2", limited: "否", origin: "ラテラーノ", weapon: "物理（ガンシールド）" },
-    { name: "ティフォン", race: "フィリン", block: "1", limited: "否", origin: "ライタニエ", weapon: "物理（大砲）" },
-    { name: "琳琅スワイヤー", race: "不明", block: "1", limited: "否", origin: "燕国", weapon: "物理（短剣）" },
-    { name: "純燼エイヤフィヤトラ", race: "ウルプス", block: "2", limited: "否", origin: "カズデル", weapon: "治療（杖）" },
-    { name: "聖約イグゼキュター", race: "サルカズ", block: "1", limited: "是", origin: "ラテラーノ", weapon: "物理（鎌）" },
-    { name: "淬羽サイレンス", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "術式/治療（羽）" },
-    { name: "ミュルジス", race: "ペロ", block: "1", limited: "否", origin: "シラクーザ", weapon: "物理（剣）" },
-    { name: "ホルハイヤ", race: "サルカズ", block: "1", limited: "否", origin: "カズデル", weapon: "術式（杖）" },
-    { name: "イネス", race: "フィリン", block: "1", limited: "是", origin: "コロンビア", weapon: "物理（銃）" },
-    { name: "キリンRヤトウ", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "物理（刀）" },
-    { name: "チューバイ", race: "ドラコ", block: "1", limited: "否", origin: "燕国", weapon: "物理（槍）" },
-    { name: "リン", race: "フィリン", block: "1", limited: "是", origin: "ドソレス", weapon: "術式（陣）" },
-    { name: "チョンユエ", race: "ドラコ", block: "1", limited: "否", origin: "燕国", weapon: "物理（拳）" },
-    { name: "焔影リード", race: "ウルプス", block: "2", limited: "否", origin: "燕国", weapon: "治療/術式（銃）" },
-    { name: "ヴィジェル", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "物理（剣）" },
-    { name: "ペナンス", race: "サルカズ", block: "3", limited: "是", origin: "ラテラーノ", weapon: "物理（盾）" },
-    { name: "血掟テキサス", race: "ルポ", block: "1", limited: "は", origin: "シラクーザ", weapon: "物理（刃）" },
-    { name: "ステインレス", race: "フィリン", block: "1", limited: "否", origin: "コロンビア", weapon: "術式（銃）" },
-    { name: "ムリナール", race: "カウトス", block: "1", limited: "否", origin: "コロンビア", weapon: "物理（剣）" },
-    { name: "ドロシー", race: "サルカズ", block: "1", limited: "否", origin: "コロンビア", weapon: "術式（罠）" },
-    { name: "パゼオンカ", race: "フィリン", block: "1", limited: "否", origin: "サーゴン", weapon: "物理（ライフル）" },
-    { name: "百錬ガヴィル", race: "クーロル", block: "1", limited: "否", origin: "ヴィクトリア", weapon: "物理（剣）" },
-    { name: "エーベンホルツ", race: "ウルプス", block: "1", limited: "否", origin: "ラテラーノ", weapon: "術式（書物）" },
-    { name: "アイリーニ", race: "フィリン", block: "1", limited: "否", origin: "ライタニエ", weapon: "物理（レイピア）" },
-    { name: "ルーメン", race: "アエテルナ", block: "2", limited: "是", origin: "サーゴン", weapon: "治療（光）" },
-    { name: "帰溟スペクター", race: "水族", block: "1", limited: "是", origin: "アイギス", weapon: "物理（人形）" },
-    { name: "ホルン", race: "ヴォイヴル", block: "3", limited: "否", origin: "カズデル", weapon: "物理（パイルバンカー）" },
-    { name: "フィアメッタ", race: "フィリン", block: "1", limited: "否", origin: "シエスタ", weapon: "物理（手榴弾）" },
-    { name: "ゴールデングロー", race: "フィリン", block: "1", limited: "否", origin: "コロンビア", weapon: "術式（蜂ドローン）" },
-    { name: "リー", race: "フィリン", block: "1", limited: "否", origin: "燕国", weapon: "物理（剣）" },
-    { name: "リィン", race: "ドラコ", block: "1", limited: "否", origin: "燕国", weapon: "術式（召喚）" },
-    { name: "ノーシス", race: "フィリン", block: "1", limited: "否", origin: "コロンビア", weapon: "術式（呪い）" },
-    { name: "フレイムテイル", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "物理（槍）" },
-    { name: "耀騎士ニアール", race: "サルカズ", block: "2", limited: "否", origin: "カズデル", weapon: "物理（剣）" },
-    { name: "ファートゥース", race: "ペロ", block: "1", limited: "否", origin: "リムビリトン", weapon: "物理（ライフル）" },
-    { name: "サイラッハ", race: "ペロ", block: "1", limited: "否", origin: "サミ", weapon: "物理（剣）" },
-    { name: "ミヅキ", race: "鬼族", block: "1", limited: "否", origin: "燕国", weapon: "物理（刀）" },
-    { name: "遊龍チェン", race: "ドラコ", block: "2", limited: "否", origin: "燕国", weapon: "物理（クロスボウ）" },
-    { name: "パラス", race: "アイギス", block: "2", limited: "否", origin: "アイギス", weapon: "物理（剣）" },
-    { name: "カーネリアン", race: "カプリニ", block: "1", limited: "否", origin: "サーゴン", weapon: "術式（陣）" },
-    { name: "濁心スカジ", race: "深海種", block: "1", limited: "是", origin: "アビサル", weapon: "術式（銃）" },
-    { name: "グレイディーア", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "物理（フック）" },
-    { name: "パッセンジャー", race: "フィリン", block: "1", limited: "是", origin: "コロンビア", weapon: "術式（鎖）" },
-    { name: "アッシュ", race: "フィリン", block: "1", limited: "否", origin: "ヴィクトリア", weapon: "物理（ライフル）" },
-    { name: "サガ", race: "フィリン", block: "1", limited: "否", origin: "燕国", weapon: "物理（爪）" },
-    { name: "シー", race: "カウトス", block: "1", limited: "是", origin: "燕国", weapon: "術式（拡散）" },
-    { name: "アルケット", race: "フィリン", block: "1", limited: "否", origin: "サーゴン", weapon: "物理（ライフル）" },
-    { name: "マウンテン", race: "カプリニ", block: "1", limited: "否", origin: "燕国", weapon: "物理（拳）" },
-    { name: "マドロック", race: "サルカズ", block: "3", limited: "是", origin: "カズデル", weapon: "物理（盾）" },
-    { name: "ロスモンティス", race: "サルカズ", block: "1", limited: "是", origin: "コロンビア", weapon: "物理（手榴弾）" },
-    { name: "ブレミシャイン", race: "フィリン", block: "2", limited: "否", origin: "ラテラーノ", weapon: "物理/治療（銃）" },
-    { name: "スルト", race: "アイギス", block: "1", limited: "是", origin: "アイギス", weapon: "物理（剣）" },
-    { name: "ユーネクテス", race: "サケ族", block: "2", limited: "是", origin: "サミ", weapon: "物理（爪）" },
-    { name: "ソーンズ", race: "アイギス", block: "1", limited: "否", origin: "アイギス", weapon: "物理（剣）" }
+    { name: "ハルカ", race: "ウルプス", block: "1", limited: "否", origin: "ラテラーノ", weapon: "術式（杖）", gender: "女性" },
+    { name: "斬業ホシグマ", race: "鬼族", block: "2", limited: "否", origin: "龍門", weapon: "物理（盾）", gender: "女性" },
+    { name: "レイディアン", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（召喚オーブ）", gender: "女性" },
+    { name: "司霆レイズ", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "物理（剣）", gender: "女性" },
+    { name: "トラゴーディア", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（書物）", gender: "女性" },
+    { name: "サンクタ・ミキサー", race: "サルカズ", block: "2", limited: "是", origin: "ラテラーノ", weapon: "物理（ガンランス）", gender: "女性" },
+    { name: "レミュアン", race: "ペロ", block: "1", limited: "否", origin: "コロンビア", weapon: "物理（ライフル）", gender: "女性" },
+    { name: "新約エクシア", race: "ウルプス", block: "1", limited: "是", origin: "ラテラーノ", weapon: "物理（二丁拳銃）", gender: "女性" },
+    { name: "Mon3tr", race: "フィリン", block: "2", limited: "否", origin: "ロドスアイランド", weapon: "術式/治療（鎖）", gender: "女性" },
+    { name: "ネクラス", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（人形召喚）", gender: "女性" },
+    { name: "エンテレケイア", race: "サルカズ", block: "1", limited: "否", origin: "カズデル", weapon: "物理（鎌）", gender: "女性" },
+    { name: "熾炎ブレイズ", race: "フィリン", block: "1", limited: "否", origin: "シエスタ", weapon: "術式（爆発）", gender: "女性" },
+    { name: "ユー", race: "ドラコ", block: "3", limited: "是", origin: "燕国", weapon: "術式/防御（盾）", gender: "女性" },
+    { name: "引星ソーンズ", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（錬金術）", gender: "女性" },
+    { name: "クラウンスレイヤー", race: "サルカズ", block: "1", limited: "否", origin: "カズデル", weapon: "物理（短剣）", gender: "女性" },
+    { name: "荒蕪ラップランド", race: "ルポ", block: "1", limited: "否", origin: "シラクーザ", weapon: "術式（剣ドローン）", gender: "女性" },
+    { name: "ウルピスフォリア", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "物理（鎖）", gender: "女性" },
+    { name: "ヴィーナヴィクトリア", race: "カプリニ", block: "2", limited: "否", origin: "コロンビア", weapon: "物理（剣）", gender: "女性" },
+    { name: "マルシル", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（拡散）", gender: "女性" },
+    { name: "ニンフ", race: "カウトス", block: "1", limited: "是", origin: "ラテラーノ", weapon: "術式（核）", gender: "女性" },
+    { name: "ペペ", race: "カプリニ", block: "1", limited: "否", origin: "サーゴン", weapon: "物理（ハンマー）", gender: "女性" },
+    { name: "ナラントゥヤ", race: "ペロ", block: "1", limited: "否", origin: "カーラン", weapon: "物理（リボルバー）", gender: "女性" },
+    { name: "ウルピアヌス", race: "アイギス", block: "2", limited: "是", origin: "アイギス", weapon: "物理（大剣）", gender: "男性" },
+    { name: "シヴィライトエテルナ", race: "ウルプス", block: "1", limited: "否", origin: "ラテラーノ", weapon: "術式（銃）", gender: "女性" },
+    { name: "ロゴス", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（杖）", gender: "男性" },
+    { name: "ウィシャデル", race: "フィリン", block: "1", limited: "否", origin: "ライタニエ", weapon: "物理（手榴弾）", gender: "女性" },
+    { name: "アスカロン", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "物理（フック）", gender: "女性" },
+    { name: "Ela", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "術式（罠）", gender: "女性" },
+    { name: "ズオラウ", race: "ウルプス", block: "2", limited: "否", origin: "燕国", weapon: "物理（刀）", gender: "女性" },
+    { name: "シュウ", race: "フィリン", block: "2", limited: "是", origin: "ラテラーノ", weapon: "物理/治療（銃）", gender: "女性" },
+    { name: "レイ", race: "フィリン", block: "1", limited: "否", origin: "燕国", weapon: "物理（弓）", gender: "女性" },
+    { name: "デーゲンブレヒャー", race: "アスラン", block: "1", limited: "否", origin: "ライタニエ", weapon: "物理（大太刀）", gender: "女性" },
+    { name: "レッシング", race: "フィリン", block: "1", limited: "否", origin: "ライタニエ", weapon: "物理（剣）", gender: "男性" },
+    { name: "ヴィヴィアナ", race: "カプリニ", block: "2", limited: "否", origin: "コロンビア", weapon: "物理（剣）", gender: "女性" },
+    { name: "ヴィルトゥオーサ", race: "ペロ", block: "1", limited: "是", origin: "コロンビア", weapon: "術式（儀式）", gender: "女性" },
+    { name: "ヘドリー", race: "サルカズ", block: "1", limited: "否", origin: "カズデル", weapon: "物理（刃）", gender: "女性" },
+    { name: "滌火ジェシカ", race: "ウルプス", block: "2", limited: "否", origin: "ラテラーノ", weapon: "物理（ガンシールド）", gender: "女性" },
+    { name: "ティフォン", race: "フィリン", block: "1", limited: "否", origin: "ライタニエ", weapon: "物理（大砲）", gender: "女性" },
+    { name: "琳琅スワイヤー", race: "種族不明", block: "1", limited: "否", origin: "燕国", weapon: "物理（短剣）", gender: "女性" },
+    { name: "純燼エイヤフィヤトラ", race: "ウルプス", block: "2", limited: "否", origin: "カズデル", weapon: "治療（杖）", gender: "女性" },
+    { name: "聖約イグゼキュター", race: "サルカズ", block: "1", limited: "是", origin: "ラテラーノ", weapon: "物理（鎌）", gender: "女性" },
+    { name: "淬羽サイレンス", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "術式/治療（羽）", gender: "女性" },
+    { name: "ミュルジス", race: "ペロ", block: "1", limited: "否", origin: "シラクーザ", weapon: "物理（剣）", gender: "女性" },
+    { name: "ホルハイヤ", race: "サルカズ", block: "1", limited: "否", origin: "カズデル", weapon: "術式（杖）", gender: "女性" },
+    { name: "イネス", race: "フィリン", block: "1", limited: "是", origin: "コロンビア", weapon: "物理（銃）", gender: "女性" },
+    { name: "キリンRヤトウ", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "物理（刀）", gender: "女性" },
+    { name: "チューバイ", race: "ドラコ", block: "1", limited: "否", origin: "燕国", weapon: "物理（槍）", gender: "男性" },
+    { name: "リン", race: "フィリン", block: "1", limited: "是", origin: "ドソレス", weapon: "術式（陣）", gender: "女性" },
+    { name: "チョンユエ", race: "ドラコ", block: "1", limited: "否", origin: "燕国", weapon: "物理（拳）", gender: "女性" },
+    { name: "焔影リード", race: "ウルプス", block: "2", limited: "否", origin: "燕国", weapon: "治療/術式（銃）", gender: "女性" },
+    { name: "ヴィジェル", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "物理（剣）", gender: "女性" },
+    { name: "ペナンス", race: "サルカズ", block: "3", limited: "是", origin: "ラテラーノ", weapon: "物理（盾）", gender: "女性" },
+    { name: "血掟テキサス", race: "ルポ", block: "1", limited: "是", origin: "シラクーザ", weapon: "物理（刃）", gender: "女性" },
+    { name: "ステインレス", race: "フィリン", block: "1", limited: "否", origin: "コロンビア", weapon: "術式（銃）", gender: "女性" },
+    { name: "ムリナール", race: "カウトス", block: "1", limited: "否", origin: "コロンビア", weapon: "物理（剣）", gender: "男性" },
+    { name: "ドロシー", race: "サルカズ", block: "1", limited: "否", origin: "コロンビア", weapon: "術式（罠）", gender: "女性" },
+    { name: "パゼオンカ", race: "フィリン", block: "1", limited: "否", origin: "サーゴン", weapon: "物理（ライフル）", gender: "女性" },
+    { name: "百錬ガヴィル", race: "クーロル", block: "1", limited: "否", origin: "ヴィクトリア", weapon: "物理（剣）", gender: "男性" },
+    { name: "エーベンホルツ", race: "ウルプス", block: "1", limited: "否", origin: "ラテラーノ", weapon: "術式（書物）", gender: "女性" },
+    { name: "アイリーニ", race: "フィリン", block: "1", limited: "否", origin: "ライタニエ", weapon: "物理（レイピア）", gender: "女性" },
+    { name: "ルーメン", race: "アエテルナ", block: "2", limited: "是", origin: "サーゴン", weapon: "治療（光）", gender: "女性" },
+    { name: "帰溟スペクター", race: "水族", block: "1", limited: "是", origin: "アイギス", weapon: "物理（人形）", gender: "女性" },
+    { name: "ホルン", race: "ヴォイヴル", block: "3", limited: "否", origin: "カズデル", weapon: "物理（パイルバンカー）", gender: "女性" },
+    { name: "フィアメッタ", race: "フィリン", block: "1", limited: "否", origin: "シエスタ", weapon: "物理（手榴弾）", gender: "女性" },
+    { name: "ゴールデングロー", race: "フィリン", block: "1", limited: "否", origin: "コロンビア", weapon: "術式（蜂ドローン）", gender: "女性" },
+    { name: "リー", race: "フィリン", block: "1", limited: "否", origin: "燕国", weapon: "物理（剣）", gender: "女性" },
+    { name: "リィン", race: "ドラコ", block: "1", limited: "否", origin: "燕国", weapon: "術式（召喚）", gender: "女性" },
+    { name: "ノーシス", race: "フィリン", block: "1", limited: "否", origin: "コロンビア", weapon: "術式（呪い）", gender: "女性" },
+    { name: "フレイムテイル", race: "ウルプス", block: "1", limited: "否", origin: "燕国", weapon: "物理（槍）", gender: "女性" },
+    { name: "耀騎士ニアール", race: "サルカズ", block: "2", limited: "否", origin: "カズデル", weapon: "物理（剣）", gender: "女性" },
+    { name: "ファートゥース", race: "ペロ", block: "1", limited: "否", origin: "リムビリトン", weapon: "物理（ライフル）", gender: "女性" },
+    { name: "サイラッハ", race: "ペロ", block: "1", limited: "否", origin: "サミ", weapon: "物理（剣）", gender: "女性" },
+    { name: "ミヅキ", race: "鬼族", block: "1", limited: "否", origin: "燕国", weapon: "物理（刀）", gender: "女性" },
+    { name: "遊龍チェン", race: "ドラコ", block: "2", limited: "否", origin: "燕国", weapon: "物理（クロスボウ）", gender: "女性" },
+    { name: "パラス", race: "アイギス", block: "2", limited: "否", origin: "アイギス", weapon: "物理（剣）", gender: "男性" },
+    { name: "カーネリアン", race: "カプリニ", block: "1", limited: "否", origin: "サーゴン", weapon: "術式（陣）", gender: "女性" },
+    { name: "濁心スカジ", race: "深海種", block: "1", limited: "是", origin: "アビサル", weapon: "術式（銃）", gender: "女性" },
+    { name: "グレイディーア", race: "サルカズ", block: "1", limited: "是", origin: "カズデル", weapon: "物理（フック）", gender: "女性" },
+    { name: "パッセンジャー", race: "フィリン", block: "1", limited: "是", origin: "コロンビア", weapon: "術式（鎖）", gender: "女性" },
+    { name: "アッシュ", race: "フィリン", block: "1", limited: "否", origin: "ヴィクトリア", weapon: "物理（ライフル）", gender: "女性" },
+    { name: "サガ", race: "フィリン", block: "1", limited: "否", origin: "燕国", weapon: "物理（爪）", gender: "女性" },
+    { name: "シー", race: "カウトス", block: "1", limited: "是", origin: "燕国", weapon: "術式（拡散）", gender: "女性" },
+    { name: "アルケット", race: "フィリン", block: "1", limited: "否", origin: "サーゴン", weapon: "物理（ライフル）", gender: "女性" },
+    { name: "マウンテン", race: "カプリニ", block: "1", limited: "否", origin: "燕国", weapon: "物理（拳）", gender: "男性" },
+    { name: "マドロック", race: "サルカズ", block: "3", limited: "是", origin: "カズデル", weapon: "物理（盾）", gender: "男性" },
+    { name: "ロスモンティス", race: "サルカズ", block: "1", limited: "是", origin: "コロンビア", weapon: "物理（手榴弾）", gender: "女性" },
+    { name: "ブレミシャイン", race: "フィリン", block: "2", limited: "否", origin: "ラテラーノ", weapon: "物理/治療（銃）", gender: "女性" },
+    { name: "スルト", race: "アイギス", block: "1", limited: "是", origin: "アイギス", weapon: "物理（剣）", gender: "女性" },
+    { name: "ユーネクテス", race: "サケ族", block: "2", limited: "是", origin: "サミ", weapon: "物理（爪）", gender: "女性" },
+    { name: "ソーンズ", race: "アイギス", block: "1", limited: "否", origin: "アイギス", weapon: "物理（剣）", gender: "女性" }
 ];
 
 let currentOp = {};
@@ -208,25 +226,24 @@ function initQuiz() {
     currentOp = operators[Math.floor(Math.random() * operators.length)];
     
     // 表示をリセット
-    const ids = ['race', 'block', 'limited', 'origin', 'weapon'];
+    const ids = ['race', 'gender', 'block', 'limited', 'origin', 'weapon'];
     ids.forEach(id => {
         const el = document.getElementById('res-' + id);
         el.innerText = "？？？";
-        el.classList.add('hidden');
+        el.classList.add('hidden-text');
     });
     
     const nameEl = document.getElementById('res-name');
-    nameEl.innerText = currentOp.name;
-    nameEl.style.display = 'none';
+    nameEl.innerText = "";
 }
 
 function reveal(type) {
     if (type === 'name') {
-        document.getElementById('res-name').style.display = 'block';
+        document.getElementById('res-name').innerText = currentOp.name;
     } else {
         const el = document.getElementById('res-' + type);
         el.innerText = currentOp[type];
-        el.classList.remove('hidden');
+        el.classList.remove('hidden-text');
     }
 }
 
